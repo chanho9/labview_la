@@ -1,5 +1,17 @@
 import math
 import numpy as np
+import scipy
+import scipy.linalg
+
+# cluster input (below)
+
+#def EuclideanDistance(point1, point2):
+#	xDiff = point1[0] - point2[0]; <- cluster1, 2
+#	yDiff = point1[1] - point2[1];
+#	return math.sqrt(xDiff*xDiff + yDiff*yDiff);
+
+
+
 
 def Multiplication(a, b):
 	a = np.array(a);
@@ -38,4 +50,25 @@ def Special(a, b):
 		ans = np.identity(b);             
 	return ans.tolist();
 
+def Rank(a):
+        ans = np.linalg.matrix_rank(a);
+        return ans;
 
+def LUD(a):
+        P, L, U = scipy.linalg.lu(a);
+        ans = (P.tolist(), L.tolist(), U.tolist());
+        return ans;
+
+def SolveLin(matrix, vector):
+        ans=np.linalg.solve(matrix,vector);
+        return ans.tolist();
+
+def SVD(a, only_specific):
+        if only_specific == 1:
+                full_matrices = False;
+        else:
+                full_matrices = True;
+        u, sv, vh = np.linalg.svd(a, full_matrices);
+        s = np.diag(sv);
+        ans = (sv.tolist(), u.tolist(), s.tolist(), vh.tolist());
+        return ans;
